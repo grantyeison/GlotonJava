@@ -39,14 +39,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Restaurante.findByResLogo", query = "SELECT r FROM Restaurante r WHERE r.resLogo = :resLogo")
     , @NamedQuery(name = "Restaurante.findByResEstado", query = "SELECT r FROM Restaurante r WHERE r.resEstado = :resEstado")
     , @NamedQuery(name = "Restaurante.findByResLatitud", query = "SELECT r FROM Restaurante r WHERE r.resLatitud = :resLatitud")
-    , @NamedQuery(name = "Restaurante.findByTesLongitud", query = "SELECT r FROM Restaurante r WHERE r.tesLongitud = :tesLongitud")})
+    , @NamedQuery(name = "Restaurante.findByTesLongitud", query = "SELECT r FROM Restaurante r WHERE r.tesLongitud = :tesLongitud")
+    , @NamedQuery(name = "Restaurante.findByResId", query = "SELECT r FROM Restaurante r WHERE r.resId = :resId")})
 public class Restaurante implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 250)
+    @Size(max = 250)
     @Column(name = "res_Nit")
     private String resNit;
     @Size(max = 1000)
@@ -69,17 +67,22 @@ public class Restaurante implements Serializable {
     private Float resLatitud;
     @Column(name = "tes_Longitud")
     private Float tesLongitud;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurante")
-    private List<CaracteristicasPlato> caracteristicasPlatoList;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "res_id")
+    private Integer resId;
     @JoinColumn(name = "tbl_Usuario_due_id", referencedColumnName = "due_id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Usuario tblUsuariodueid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblRestauranteresid")
+    private List<PlatoRestaurante> platoRestauranteList;
 
     public Restaurante() {
     }
 
-    public Restaurante(String resNit) {
-        this.resNit = resNit;
+    public Restaurante(Integer resId) {
+        this.resId = resId;
     }
 
     public String getResNit() {
@@ -146,13 +149,12 @@ public class Restaurante implements Serializable {
         this.tesLongitud = tesLongitud;
     }
 
-    @XmlTransient
-    public List<CaracteristicasPlato> getCaracteristicasPlatoList() {
-        return caracteristicasPlatoList;
+    public Integer getResId() {
+        return resId;
     }
 
-    public void setCaracteristicasPlatoList(List<CaracteristicasPlato> caracteristicasPlatoList) {
-        this.caracteristicasPlatoList = caracteristicasPlatoList;
+    public void setResId(Integer resId) {
+        this.resId = resId;
     }
 
     public Usuario getTblUsuariodueid() {
@@ -163,10 +165,19 @@ public class Restaurante implements Serializable {
         this.tblUsuariodueid = tblUsuariodueid;
     }
 
+    @XmlTransient
+    public List<PlatoRestaurante> getPlatoRestauranteList() {
+        return platoRestauranteList;
+    }
+
+    public void setPlatoRestauranteList(List<PlatoRestaurante> platoRestauranteList) {
+        this.platoRestauranteList = platoRestauranteList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (resNit != null ? resNit.hashCode() : 0);
+        hash += (resId != null ? resId.hashCode() : 0);
         return hash;
     }
 
@@ -177,7 +188,7 @@ public class Restaurante implements Serializable {
             return false;
         }
         Restaurante other = (Restaurante) object;
-        if ((this.resNit == null && other.resNit != null) || (this.resNit != null && !this.resNit.equals(other.resNit))) {
+        if ((this.resId == null && other.resId != null) || (this.resId != null && !this.resId.equals(other.resId))) {
             return false;
         }
         return true;
@@ -185,7 +196,7 @@ public class Restaurante implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Restaurante[ resNit=" + resNit + " ]";
+        return "Modelo.Restaurante[ resId=" + resId + " ]";
     }
     
 }

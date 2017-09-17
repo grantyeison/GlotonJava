@@ -32,14 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c")
     , @NamedQuery(name = "Categoria.findByCatNombre", query = "SELECT c FROM Categoria c WHERE c.catNombre = :catNombre")
     , @NamedQuery(name = "Categoria.findByCatImagen", query = "SELECT c FROM Categoria c WHERE c.catImagen = :catImagen")
-    , @NamedQuery(name = "Categoria.findByCatEstado", query = "SELECT c FROM Categoria c WHERE c.catEstado = :catEstado")})
+    , @NamedQuery(name = "Categoria.findByCatEstado", query = "SELECT c FROM Categoria c WHERE c.catEstado = :catEstado")
+    , @NamedQuery(name = "Categoria.findByCatId", query = "SELECT c FROM Categoria c WHERE c.catId = :catId")})
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 250)
+    @Size(max = 250)
     @Column(name = "cat_Nombre")
     private String catNombre;
     @Size(max = 250)
@@ -48,14 +46,19 @@ public class Categoria implements Serializable {
     @Size(max = 45)
     @Column(name = "cat_Estado")
     private String catEstado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cat_Id")
+    private Integer catId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblCategoriacatId")
     private List<Plato> platoList;
 
     public Categoria() {
     }
 
-    public Categoria(String catNombre) {
-        this.catNombre = catNombre;
+    public Categoria(Integer catId) {
+        this.catId = catId;
     }
 
     public String getCatNombre() {
@@ -82,6 +85,14 @@ public class Categoria implements Serializable {
         this.catEstado = catEstado;
     }
 
+    public Integer getCatId() {
+        return catId;
+    }
+
+    public void setCatId(Integer catId) {
+        this.catId = catId;
+    }
+
     @XmlTransient
     public List<Plato> getPlatoList() {
         return platoList;
@@ -94,7 +105,7 @@ public class Categoria implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (catNombre != null ? catNombre.hashCode() : 0);
+        hash += (catId != null ? catId.hashCode() : 0);
         return hash;
     }
 
@@ -105,7 +116,7 @@ public class Categoria implements Serializable {
             return false;
         }
         Categoria other = (Categoria) object;
-        if ((this.catNombre == null && other.catNombre != null) || (this.catNombre != null && !this.catNombre.equals(other.catNombre))) {
+        if ((this.catId == null && other.catId != null) || (this.catId != null && !this.catId.equals(other.catId))) {
             return false;
         }
         return true;
@@ -113,7 +124,7 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Categoria[ catNombre=" + catNombre + " ]";
+        return "Modelo.Categoria[ catId=" + catId + " ]";
     }
     
 }

@@ -6,15 +6,16 @@
 package Modelo;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -27,44 +28,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Calificacion.findAll", query = "SELECT c FROM Calificacion c")
-    , @NamedQuery(name = "Calificacion.findByCalId", query = "SELECT c FROM Calificacion c WHERE c.calificacionPK.calId = :calId")
+    , @NamedQuery(name = "Calificacion.findByCalId", query = "SELECT c FROM Calificacion c WHERE c.calId = :calId")
     , @NamedQuery(name = "Calificacion.findByCalPuntuacion", query = "SELECT c FROM Calificacion c WHERE c.calPuntuacion = :calPuntuacion")
-    , @NamedQuery(name = "Calificacion.findByTblCaracteristicasPlatotblRestauranteresNit", query = "SELECT c FROM Calificacion c WHERE c.calificacionPK.tblCaracteristicasPlatotblRestauranteresNit = :tblCaracteristicasPlatotblRestauranteresNit")
-    , @NamedQuery(name = "Calificacion.findByTblCaracteristicasPlatotblPlatonomNombre", query = "SELECT c FROM Calificacion c WHERE c.calificacionPK.tblCaracteristicasPlatotblPlatonomNombre = :tblCaracteristicasPlatotblPlatonomNombre")
     , @NamedQuery(name = "Calificacion.findByCalUsuario", query = "SELECT c FROM Calificacion c WHERE c.calUsuario = :calUsuario")})
 public class Calificacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected CalificacionPK calificacionPK;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cal_id")
+    private Integer calId;
     @Column(name = "cal_puntuacion")
     private Integer calPuntuacion;
     @Size(max = 250)
     @Column(name = "cal_usuario")
     private String calUsuario;
-    @JoinColumns({
-        @JoinColumn(name = "tbl__Caracteristicas_Plato_tbl_Restaurante_res_Nit", referencedColumnName = "tbl_Restaurante_res_Nit", insertable = false, updatable = false)
-        , @JoinColumn(name = "tbl__Caracteristicas_Plato_tbl_Plato_nom_Nombre", referencedColumnName = "tbl_Plato_nom_Nombre", insertable = false, updatable = false)})
+    @JoinColumn(name = "tbl_Plato_Restaurante_plat_Id", referencedColumnName = "plat_Id")
     @ManyToOne(optional = false)
-    private CaracteristicasPlato caracteristicasPlato;
+    private PlatoRestaurante tblPlatoRestauranteplatId;
 
     public Calificacion() {
     }
 
-    public Calificacion(CalificacionPK calificacionPK) {
-        this.calificacionPK = calificacionPK;
+    public Calificacion(Integer calId) {
+        this.calId = calId;
     }
 
-    public Calificacion(int calId, String tblCaracteristicasPlatotblRestauranteresNit, String tblCaracteristicasPlatotblPlatonomNombre) {
-        this.calificacionPK = new CalificacionPK(calId, tblCaracteristicasPlatotblRestauranteresNit, tblCaracteristicasPlatotblPlatonomNombre);
+    public Integer getCalId() {
+        return calId;
     }
 
-    public CalificacionPK getCalificacionPK() {
-        return calificacionPK;
-    }
-
-    public void setCalificacionPK(CalificacionPK calificacionPK) {
-        this.calificacionPK = calificacionPK;
+    public void setCalId(Integer calId) {
+        this.calId = calId;
     }
 
     public Integer getCalPuntuacion() {
@@ -83,18 +79,18 @@ public class Calificacion implements Serializable {
         this.calUsuario = calUsuario;
     }
 
-    public CaracteristicasPlato getCaracteristicasPlato() {
-        return caracteristicasPlato;
+    public PlatoRestaurante getTblPlatoRestauranteplatId() {
+        return tblPlatoRestauranteplatId;
     }
 
-    public void setCaracteristicasPlato(CaracteristicasPlato caracteristicasPlato) {
-        this.caracteristicasPlato = caracteristicasPlato;
+    public void setTblPlatoRestauranteplatId(PlatoRestaurante tblPlatoRestauranteplatId) {
+        this.tblPlatoRestauranteplatId = tblPlatoRestauranteplatId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (calificacionPK != null ? calificacionPK.hashCode() : 0);
+        hash += (calId != null ? calId.hashCode() : 0);
         return hash;
     }
 
@@ -105,7 +101,7 @@ public class Calificacion implements Serializable {
             return false;
         }
         Calificacion other = (Calificacion) object;
-        if ((this.calificacionPK == null && other.calificacionPK != null) || (this.calificacionPK != null && !this.calificacionPK.equals(other.calificacionPK))) {
+        if ((this.calId == null && other.calId != null) || (this.calId != null && !this.calId.equals(other.calId))) {
             return false;
         }
         return true;
@@ -113,7 +109,7 @@ public class Calificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Calificacion[ calificacionPK=" + calificacionPK + " ]";
+        return "Modelo.Calificacion[ calId=" + calId + " ]";
     }
     
 }

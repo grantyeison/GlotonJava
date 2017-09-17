@@ -12,11 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Apollo
  */
 @Entity
-@Table(name = "promociones_combos")
+@Table(name = "tbl_promociones_combos")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PromocionesCombos.findAll", query = "SELECT p FROM PromocionesCombos p")
@@ -57,12 +55,8 @@ public class PromocionesCombos implements Serializable {
     private Date promoFecha;
     @Column(name = "promo_duracion")
     private Integer promoDuracion;
-    @JoinTable(name = "item_promo", joinColumns = {
-        @JoinColumn(name = "Promociones_Combos_promo_id", referencedColumnName = "promo_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "tbl__Caracteristicas_Plato_tbl_Restaurante_res_Nit", referencedColumnName = "tbl_Restaurante_res_Nit")
-        , @JoinColumn(name = "tbl__Caracteristicas_Plato_tbl_Plato_nom_Nombre", referencedColumnName = "tbl_Plato_nom_Nombre")})
-    @ManyToMany
-    private List<CaracteristicasPlato> caracteristicasPlatoList;
+    @OneToMany(mappedBy = "promocionesCombospromoid")
+    private List<PromocionesCombosHasTblPlatoRestaurante> promocionesCombosHasTblPlatoRestauranteList;
 
     public PromocionesCombos() {
     }
@@ -112,12 +106,12 @@ public class PromocionesCombos implements Serializable {
     }
 
     @XmlTransient
-    public List<CaracteristicasPlato> getCaracteristicasPlatoList() {
-        return caracteristicasPlatoList;
+    public List<PromocionesCombosHasTblPlatoRestaurante> getPromocionesCombosHasTblPlatoRestauranteList() {
+        return promocionesCombosHasTblPlatoRestauranteList;
     }
 
-    public void setCaracteristicasPlatoList(List<CaracteristicasPlato> caracteristicasPlatoList) {
-        this.caracteristicasPlatoList = caracteristicasPlatoList;
+    public void setPromocionesCombosHasTblPlatoRestauranteList(List<PromocionesCombosHasTblPlatoRestaurante> promocionesCombosHasTblPlatoRestauranteList) {
+        this.promocionesCombosHasTblPlatoRestauranteList = promocionesCombosHasTblPlatoRestauranteList;
     }
 
     @Override

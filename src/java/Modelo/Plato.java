@@ -7,16 +7,18 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -30,83 +32,93 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Plato.findAll", query = "SELECT p FROM Plato p")
-    , @NamedQuery(name = "Plato.findByNomNombre", query = "SELECT p FROM Plato p WHERE p.platoPK.nomNombre = :nomNombre")
-    , @NamedQuery(name = "Plato.findByNomImagen", query = "SELECT p FROM Plato p WHERE p.nomImagen = :nomImagen")
-    , @NamedQuery(name = "Plato.findByNomEstado", query = "SELECT p FROM Plato p WHERE p.nomEstado = :nomEstado")
-    , @NamedQuery(name = "Plato.findByTblCategoriacatNombre", query = "SELECT p FROM Plato p WHERE p.platoPK.tblCategoriacatNombre = :tblCategoriacatNombre")})
+    , @NamedQuery(name = "Plato.findByPlaNombre", query = "SELECT p FROM Plato p WHERE p.plaNombre = :plaNombre")
+    , @NamedQuery(name = "Plato.findByPlaImagen", query = "SELECT p FROM Plato p WHERE p.plaImagen = :plaImagen")
+    , @NamedQuery(name = "Plato.findByPlaEstado", query = "SELECT p FROM Plato p WHERE p.plaEstado = :plaEstado")
+    , @NamedQuery(name = "Plato.findByPlaId", query = "SELECT p FROM Plato p WHERE p.plaId = :plaId")})
 public class Plato implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected PlatoPK platoPK;
     @Size(max = 250)
-    @Column(name = "nom_Imagen")
-    private String nomImagen;
+    @Column(name = "pla_Nombre")
+    private String plaNombre;
+    @Size(max = 250)
+    @Column(name = "pla_Imagen")
+    private String plaImagen;
     @Size(max = 45)
-    @Column(name = "nom_Estado")
-    private String nomEstado;
-    @JoinColumn(name = "tbl_Categoria_cat_Nombre", referencedColumnName = "cat_Nombre", insertable = false, updatable = false)
+    @Column(name = "pla_Estado")
+    private String plaEstado;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "pla_Id")
+    private Integer plaId;
+    @JoinColumn(name = "tbl_Categoria_cat_Id", referencedColumnName = "cat_Id")
     @ManyToOne(optional = false)
-    private Categoria categoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plato")
-    private List<CaracteristicasPlato> caracteristicasPlatoList;
+    private Categoria tblCategoriacatId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblPlatoplaId")
+    private List<PlatoRestaurante> platoRestauranteList;
 
     public Plato() {
     }
 
-    public Plato(PlatoPK platoPK) {
-        this.platoPK = platoPK;
+    public Plato(Integer plaId) {
+        this.plaId = plaId;
     }
 
-    public Plato(String nomNombre, String tblCategoriacatNombre) {
-        this.platoPK = new PlatoPK(nomNombre, tblCategoriacatNombre);
+    public String getPlaNombre() {
+        return plaNombre;
     }
 
-    public PlatoPK getPlatoPK() {
-        return platoPK;
+    public void setPlaNombre(String plaNombre) {
+        this.plaNombre = plaNombre;
     }
 
-    public void setPlatoPK(PlatoPK platoPK) {
-        this.platoPK = platoPK;
+    public String getPlaImagen() {
+        return plaImagen;
     }
 
-    public String getNomImagen() {
-        return nomImagen;
+    public void setPlaImagen(String plaImagen) {
+        this.plaImagen = plaImagen;
     }
 
-    public void setNomImagen(String nomImagen) {
-        this.nomImagen = nomImagen;
+    public String getPlaEstado() {
+        return plaEstado;
     }
 
-    public String getNomEstado() {
-        return nomEstado;
+    public void setPlaEstado(String plaEstado) {
+        this.plaEstado = plaEstado;
     }
 
-    public void setNomEstado(String nomEstado) {
-        this.nomEstado = nomEstado;
+    public Integer getPlaId() {
+        return plaId;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public void setPlaId(Integer plaId) {
+        this.plaId = plaId;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public Categoria getTblCategoriacatId() {
+        return tblCategoriacatId;
+    }
+
+    public void setTblCategoriacatId(Categoria tblCategoriacatId) {
+        this.tblCategoriacatId = tblCategoriacatId;
     }
 
     @XmlTransient
-    public List<CaracteristicasPlato> getCaracteristicasPlatoList() {
-        return caracteristicasPlatoList;
+    public List<PlatoRestaurante> getPlatoRestauranteList() {
+        return platoRestauranteList;
     }
 
-    public void setCaracteristicasPlatoList(List<CaracteristicasPlato> caracteristicasPlatoList) {
-        this.caracteristicasPlatoList = caracteristicasPlatoList;
+    public void setPlatoRestauranteList(List<PlatoRestaurante> platoRestauranteList) {
+        this.platoRestauranteList = platoRestauranteList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (platoPK != null ? platoPK.hashCode() : 0);
+        hash += (plaId != null ? plaId.hashCode() : 0);
         return hash;
     }
 
@@ -117,7 +129,7 @@ public class Plato implements Serializable {
             return false;
         }
         Plato other = (Plato) object;
-        if ((this.platoPK == null && other.platoPK != null) || (this.platoPK != null && !this.platoPK.equals(other.platoPK))) {
+        if ((this.plaId == null && other.plaId != null) || (this.plaId != null && !this.plaId.equals(other.plaId))) {
             return false;
         }
         return true;
@@ -125,7 +137,7 @@ public class Plato implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Plato[ platoPK=" + platoPK + " ]";
+        return "Modelo.Plato[ plaId=" + plaId + " ]";
     }
     
 }

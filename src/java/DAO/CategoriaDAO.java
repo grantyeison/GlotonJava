@@ -17,7 +17,7 @@ public interface CategoriaDAO {
     
     void crearCategoria(Categoria cat);
     
-    Categoria BuscarCategoria(String catNombre);
+    Categoria BuscarCategoria(int id);
     
     void ModificarCategoria (Categoria esc);
     

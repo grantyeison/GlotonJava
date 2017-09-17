@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -70,7 +69,7 @@ public class Usuario implements Serializable {
     @Column(name = "due_Fecha_Registro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dueFechaRegistro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblUsuariodueid")
+    @OneToMany(mappedBy = "tblUsuariodueid")
     private List<Restaurante> restauranteList;
 
     public Usuario() {
