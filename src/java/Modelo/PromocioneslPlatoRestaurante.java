@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Apollo
+ * @author Daniel
  */
 @Entity
 @Table(name = "tbl_promocionesl_plato_restaurante")
