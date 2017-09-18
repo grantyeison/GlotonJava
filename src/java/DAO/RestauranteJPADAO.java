@@ -50,12 +50,16 @@ public class RestauranteJPADAO implements RestauranteDAO{
 
     @Override
     public void ModificarRestaurante(Restaurante res) {
-        
+        if (BuscarRestaurante(res.getResId()) != null)
+            EliminarRestaurante(res);
+        crearRestaurante(res);
     }
 
     @Override
     public void EliminarRestaurante(Restaurante res) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.getTransaction().begin();
+        em.remove(res);
+        em.getTransaction().commit();
     }
     
 }
