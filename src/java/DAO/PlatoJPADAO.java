@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.Categoria;
+import Modelo.Plato;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,50 +16,49 @@ import javax.persistence.Query;
  *
  * @author Apollo
  */
-public class CategoriaJPADAO implements CategoriaDAO{
-
+public class PlatoJPADAO implements PlatoDAO{
     EntityManager em;
     EntityManagerFactory emf;
 
-    public CategoriaJPADAO() 
+    public PlatoJPADAO() 
     {
         emf = Persistence.createEntityManagerFactory("Glot-onPU");
         em = emf.createEntityManager();
     }
     
     @Override
-    public List<Categoria> ListarCategorias() {
-        List<Categoria> lst = null;
-        Query q = em.createQuery("SELECT a FROM Categoria a");
+    public List<Plato> ListarPlato() {
+        List<Plato> lst = null;
+        Query q = em.createQuery("SELECT a FROM Plato a");
         lst = q.getResultList();
         return lst;
     }
 
     @Override
-    public void crearCategoria(Categoria cat) {
+    public void crearPlato(Plato carPla) {
         em.getTransaction().begin();
-        em.persist(cat);
+        em.persist(carPla);
         em.getTransaction().commit();
     }
 
     @Override
-    public Categoria BuscarCategoria(int id) {
-        Categoria cat = null;
-        cat = em.find(cat.getClass(), id);
-        return cat;
+    public Plato BuscarPlato(int id) {
+        Plato carPla = null;
+        carPla = em.find(carPla.getClass(), id);
+        return carPla;
     }
 
     @Override
-    public void ModificarCategoria(Categoria esc) {
-        if (BuscarCategoria(esc.getCatId()) != null)
-            EliminarCategoria(esc);
-        crearCategoria(esc);
+    public void ModificarPlato(Plato carPla) {
+        if (BuscarPlato(carPla.getPlaId()) != null)
+            EliminarPlato(carPla);
+        crearPlato(carPla);
     }
 
     @Override
-    public void EliminarCategoria(Categoria esc) {
+    public void EliminarPlato(Plato carPla) {
         em.getTransaction().begin();
-        em.remove(esc);
+        em.remove(carPla);
         em.getTransaction().commit();
     }
     

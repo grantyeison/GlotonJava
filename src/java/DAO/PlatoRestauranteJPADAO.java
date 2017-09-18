@@ -5,7 +5,10 @@
  */
 package DAO;
 
+import Modelo.PlatoRestaurante;
 import Modelo.Categoria;
+import Modelo.Plato;
+import Modelo.Restaurante;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,50 +19,49 @@ import javax.persistence.Query;
  *
  * @author Apollo
  */
-public class CategoriaJPADAO implements CategoriaDAO{
-
+public class PlatoRestauranteJPADAO implements PlatoRestauranteDAO{
     EntityManager em;
     EntityManagerFactory emf;
 
-    public CategoriaJPADAO() 
+    public PlatoRestauranteJPADAO() 
     {
         emf = Persistence.createEntityManagerFactory("Glot-onPU");
         em = emf.createEntityManager();
     }
     
     @Override
-    public List<Categoria> ListarCategorias() {
-        List<Categoria> lst = null;
-        Query q = em.createQuery("SELECT a FROM Categoria a");
+    public List<PlatoRestaurante> ListarPlatoRestaurante() {
+        List<PlatoRestaurante> lst = null;
+        Query q = em.createQuery("SELECT a FROM PlatoRestaurante a");
         lst = q.getResultList();
         return lst;
     }
 
     @Override
-    public void crearCategoria(Categoria cat) {
+    public void crearPlatoRestaurante(PlatoRestaurante carPla) {
         em.getTransaction().begin();
-        em.persist(cat);
+        em.persist(carPla);
         em.getTransaction().commit();
     }
 
     @Override
-    public Categoria BuscarCategoria(int id) {
-        Categoria cat = null;
-        cat = em.find(cat.getClass(), id);
-        return cat;
+    public PlatoRestaurante BuscarPlatoRestaurante(int id) {
+        PlatoRestaurante carPla = null;
+        carPla = em.find(carPla.getClass(), id);
+        return carPla;
     }
 
     @Override
-    public void ModificarCategoria(Categoria esc) {
-        if (BuscarCategoria(esc.getCatId()) != null)
-            EliminarCategoria(esc);
-        crearCategoria(esc);
+    public void ModificarPlatoRestaurante(PlatoRestaurante carPla) {
+        if (BuscarPlatoRestaurante(carPla.getPlatId()) != null)
+            EliminarPlatoRestaurante(carPla);
+        crearPlatoRestaurante(carPla);
     }
 
     @Override
-    public void EliminarCategoria(Categoria esc) {
+    public void EliminarPlatoRestaurante(PlatoRestaurante carPla) {
         em.getTransaction().begin();
-        em.remove(esc);
+        em.remove(carPla);
         em.getTransaction().commit();
     }
     

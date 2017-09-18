@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.Categoria;
+import Modelo.Promociones;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,50 +16,49 @@ import javax.persistence.Query;
  *
  * @author Apollo
  */
-public class CategoriaJPADAO implements CategoriaDAO{
-
+public class PromocionesJPADAO implements PromocionesDAO{
     EntityManager em;
     EntityManagerFactory emf;
 
-    public CategoriaJPADAO() 
+    public PromocionesJPADAO() 
     {
         emf = Persistence.createEntityManagerFactory("Glot-onPU");
         em = emf.createEntityManager();
     }
     
     @Override
-    public List<Categoria> ListarCategorias() {
-        List<Categoria> lst = null;
-        Query q = em.createQuery("SELECT a FROM Categoria a");
+    public List<Promociones> ListarPromocionesCombos() {
+        List<Promociones> lst = null;
+        Query q = em.createQuery("SELECT a FROM PromocionesCombos a");
         lst = q.getResultList();
         return lst;
     }
 
     @Override
-    public void crearCategoria(Categoria cat) {
+    public void crearPromocionesCombos(Promociones promo) {
         em.getTransaction().begin();
-        em.persist(cat);
+        em.persist(promo);
         em.getTransaction().commit();
     }
 
     @Override
-    public Categoria BuscarCategoria(int id) {
-        Categoria cat = null;
-        cat = em.find(cat.getClass(), id);
-        return cat;
+    public Promociones BuscarPromocionesCombos(int id) {
+        Promociones promo = null;
+        promo = em.find(promo.getClass(), id);
+        return promo;
     }
 
     @Override
-    public void ModificarCategoria(Categoria esc) {
-        if (BuscarCategoria(esc.getCatId()) != null)
-            EliminarCategoria(esc);
-        crearCategoria(esc);
+    public void ModificarPromocionesCombos(Promociones promo) {
+        if (BuscarPromocionesCombos(promo.getPromoId()) != null)
+            EliminarPromocionesCombos(promo);
+        crearPromocionesCombos(promo);
     }
 
     @Override
-    public void EliminarCategoria(Categoria esc) {
+    public void EliminarPromocionesCombos(Promociones promo) {
         em.getTransaction().begin();
-        em.remove(esc);
+        em.remove(promo);
         em.getTransaction().commit();
     }
     

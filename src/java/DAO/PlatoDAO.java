@@ -5,21 +5,22 @@
  */
 package DAO;
 
-import Modelo.Categoria;
+import Modelo.Plato;
 import java.util.List;
 
 /**
  *
  * @author Apollo
  */
-public interface CategoriaDAO {
-    List<Categoria> ListarCategorias();    
+public interface PlatoDAO {
+    List<Plato> ListarPlato();    
     
-    void crearCategoria(Categoria cat);
+    void crearPlato(Plato carPla);
     
-    Categoria BuscarCategoria(int id);
+    Plato BuscarPlato(int id);
     
-    void ModificarCategoria (Categoria esc);
+    void ModificarPlato (Plato carPla);
     
-    void EliminarCategoria (Categoria esc);
+    void EliminarPlato (Plato carPla);
+    
 }

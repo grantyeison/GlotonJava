@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.Categoria;
+import Modelo.Calificacion;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,50 +16,50 @@ import javax.persistence.Query;
  *
  * @author Apollo
  */
-public class CategoriaJPADAO implements CategoriaDAO{
+public class CalificacionJPADAO implements CalificacionDAO{
 
-    EntityManager em;
+     EntityManager em;
     EntityManagerFactory emf;
 
-    public CategoriaJPADAO() 
+    public CalificacionJPADAO() 
     {
         emf = Persistence.createEntityManagerFactory("Glot-onPU");
         em = emf.createEntityManager();
     }
     
     @Override
-    public List<Categoria> ListarCategorias() {
-        List<Categoria> lst = null;
-        Query q = em.createQuery("SELECT a FROM Categoria a");
+    public List<Calificacion> ListarCalificacion() {
+        List<Calificacion> lst = null;
+        Query q = em.createQuery("SELECT a FROM Calificacion a");
         lst = q.getResultList();
         return lst;
     }
 
     @Override
-    public void crearCategoria(Categoria cat) {
+    public void crearCalificacion(Calificacion cal) {
         em.getTransaction().begin();
-        em.persist(cat);
+        em.persist(cal);
         em.getTransaction().commit();
     }
 
     @Override
-    public Categoria BuscarCategoria(int id) {
-        Categoria cat = null;
-        cat = em.find(cat.getClass(), id);
-        return cat;
+    public Calificacion BuscarCalificacion(int codigoCal) {
+        Calificacion cal = null;
+        cal = em.find(cal.getClass(), codigoCal);
+        return cal;
     }
 
     @Override
-    public void ModificarCategoria(Categoria esc) {
-        if (BuscarCategoria(esc.getCatId()) != null)
-            EliminarCategoria(esc);
-        crearCategoria(esc);
+    public void ModificarCalificacion(Calificacion cal) {
+        if (BuscarCalificacion(cal.getCalId()) != null)
+            EliminarCalificacion(cal);
+        crearCalificacion(cal);
     }
 
     @Override
-    public void EliminarCategoria(Categoria esc) {
+    public void EliminarCalificacion(Calificacion cal) {
         em.getTransaction().begin();
-        em.remove(esc);
+        em.remove(cal);
         em.getTransaction().commit();
     }
     
