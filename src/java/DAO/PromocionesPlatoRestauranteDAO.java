@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.PromocionesCombosHasTblPlatoRestaurante;
+import Modelo.PromocioneslPlatoRestaurante;
 import java.util.List;
 
 /**
@@ -14,14 +14,14 @@ import java.util.List;
  */
 public interface PromocionesPlatoRestauranteDAO {
     
-    List<PromocionesCombosHasTblPlatoRestaurante> ListarPromocionesCombosHasTblPlatoRestaurante();    
+    List<PromocioneslPlatoRestaurante> ListarPromocionesCombosHasTblPlatoRestaurante();    
     
-    void crearPromocionesCombosHasTblPlatoRestaurante(PromocionesCombosHasTblPlatoRestaurante promo);
+    void crearPromocionesCombosHasTblPlatoRestaurante(PromocioneslPlatoRestaurante promo);
     
-    PromocionesCombosHasTblPlatoRestaurante BuscarPromocionesCombosHasTblPlatoRestaurante(int id);
+    PromocioneslPlatoRestaurante BuscarPromocionesCombosHasTblPlatoRestaurante(int id);
     
-    void ModificarPromocionesCombosHasTblPlatoRestaurante (PromocionesCombosHasTblPlatoRestaurante promo);
+    void ModificarPromocionesCombosHasTblPlatoRestaurante (PromocioneslPlatoRestaurante promo);
     
-    void EliminarPromocionesCombosHasTblPlatoRestaurante (PromocionesCombosHasTblPlatoRestaurante promo);
+    void EliminarPromocionesCombosHasTblPlatoRestaurante (PromocioneslPlatoRestaurante promo);
   
 }

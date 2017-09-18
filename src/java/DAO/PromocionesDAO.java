@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.PromocionesCombos;
+import Modelo.Promociones;
 import java.util.List;
 
 /**
@@ -13,15 +13,15 @@ import java.util.List;
  * @author Apollo
  */
 public interface PromocionesDAO {
-    List<PromocionesCombos> ListarPromocionesCombos();    
+    List<Promociones> ListarPromocionesCombos();    
     
-    void crearPromocionesCombos(PromocionesCombos promo);
+    void crearPromocionesCombos(Promociones promo);
     
-    PromocionesCombos BuscarPromocionesCombos(int id);
+    Promociones BuscarPromocionesCombos(int id);
     
-    void ModificarPromocionesCombos (PromocionesCombos promo);
+    void ModificarPromocionesCombos (Promociones promo);
     
-    void EliminarPromocionesCombos (PromocionesCombos promo);
+    void EliminarPromocionesCombos (Promociones promo);
   
     
 }

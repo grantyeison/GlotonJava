@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.PromocionesCombos;
+import Modelo.Promociones;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,36 +27,36 @@ public class PromocionesJPADAO implements PromocionesDAO{
     }
     
     @Override
-    public List<PromocionesCombos> ListarPromocionesCombos() {
-        List<PromocionesCombos> lst = null;
+    public List<Promociones> ListarPromocionesCombos() {
+        List<Promociones> lst = null;
         Query q = em.createQuery("SELECT a FROM PromocionesCombos a");
         lst = q.getResultList();
         return lst;
     }
 
     @Override
-    public void crearPromocionesCombos(PromocionesCombos promo) {
+    public void crearPromocionesCombos(Promociones promo) {
         em.getTransaction().begin();
         em.persist(promo);
         em.getTransaction().commit();
     }
 
     @Override
-    public PromocionesCombos BuscarPromocionesCombos(int id) {
-        PromocionesCombos promo = null;
+    public Promociones BuscarPromocionesCombos(int id) {
+        Promociones promo = null;
         promo = em.find(promo.getClass(), id);
         return promo;
     }
 
     @Override
-    public void ModificarPromocionesCombos(PromocionesCombos promo) {
+    public void ModificarPromocionesCombos(Promociones promo) {
         if (BuscarPromocionesCombos(promo.getPromoId()) != null)
             EliminarPromocionesCombos(promo);
         crearPromocionesCombos(promo);
     }
 
     @Override
-    public void EliminarPromocionesCombos(PromocionesCombos promo) {
+    public void EliminarPromocionesCombos(Promociones promo) {
         em.getTransaction().begin();
         em.remove(promo);
         em.getTransaction().commit();

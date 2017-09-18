@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -52,8 +53,8 @@ public class PlatoRestaurante implements Serializable {
     @Column(name = "plat_Estado")
     private String platEstado;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "plat_Id")
     private Integer platId;
     @JoinColumn(name = "tbl_Plato_pla_Id", referencedColumnName = "pla_Id")
@@ -65,7 +66,7 @@ public class PlatoRestaurante implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblPlatoRestauranteplatId")
     private List<Calificacion> calificacionList;
     @OneToMany(mappedBy = "tblPlatoRestauranteplatId")
-    private List<PromocionesCombosHasTblPlatoRestaurante> promocionesCombosHasTblPlatoRestauranteList;
+    private List<PromocioneslPlatoRestaurante> promocioneslPlatoRestauranteList;
 
     public PlatoRestaurante() {
     }
@@ -140,12 +141,12 @@ public class PlatoRestaurante implements Serializable {
     }
 
     @XmlTransient
-    public List<PromocionesCombosHasTblPlatoRestaurante> getPromocionesCombosHasTblPlatoRestauranteList() {
-        return promocionesCombosHasTblPlatoRestauranteList;
+    public List<PromocioneslPlatoRestaurante> getPromocioneslPlatoRestauranteList() {
+        return promocioneslPlatoRestauranteList;
     }
 
-    public void setPromocionesCombosHasTblPlatoRestauranteList(List<PromocionesCombosHasTblPlatoRestaurante> promocionesCombosHasTblPlatoRestauranteList) {
-        this.promocionesCombosHasTblPlatoRestauranteList = promocionesCombosHasTblPlatoRestauranteList;
+    public void setPromocioneslPlatoRestauranteList(List<PromocioneslPlatoRestaurante> promocioneslPlatoRestauranteList) {
+        this.promocioneslPlatoRestauranteList = promocioneslPlatoRestauranteList;
     }
 
     @Override

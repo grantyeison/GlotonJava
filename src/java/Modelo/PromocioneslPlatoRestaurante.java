@@ -9,13 +9,14 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -23,30 +24,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Apollo
  */
 @Entity
-@Table(name = "tbl_promociones_combos_has_tbl_plato_restaurante")
+@Table(name = "tbl_promocionesl_plato_restaurante")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PromocionesCombosHasTblPlatoRestaurante.findAll", query = "SELECT p FROM PromocionesCombosHasTblPlatoRestaurante p")
-    , @NamedQuery(name = "PromocionesCombosHasTblPlatoRestaurante.findById", query = "SELECT p FROM PromocionesCombosHasTblPlatoRestaurante p WHERE p.id = :id")})
-public class PromocionesCombosHasTblPlatoRestaurante implements Serializable {
+    @NamedQuery(name = "PromocioneslPlatoRestaurante.findAll", query = "SELECT p FROM PromocioneslPlatoRestaurante p")
+    , @NamedQuery(name = "PromocioneslPlatoRestaurante.findById", query = "SELECT p FROM PromocioneslPlatoRestaurante p WHERE p.id = :id")})
+public class PromocioneslPlatoRestaurante implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @JoinColumn(name = "Promociones_Combos_promo_id", referencedColumnName = "promo_id")
     @ManyToOne
-    private PromocionesCombos promocionesCombospromoid;
+    private Promociones promocionesCombospromoid;
     @JoinColumn(name = "tbl_Plato_Restaurante_plat_Id", referencedColumnName = "plat_Id")
     @ManyToOne
     private PlatoRestaurante tblPlatoRestauranteplatId;
 
-    public PromocionesCombosHasTblPlatoRestaurante() {
+    public PromocioneslPlatoRestaurante() {
     }
 
-    public PromocionesCombosHasTblPlatoRestaurante(Integer id) {
+    public PromocioneslPlatoRestaurante(Integer id) {
         this.id = id;
     }
 
@@ -58,11 +59,11 @@ public class PromocionesCombosHasTblPlatoRestaurante implements Serializable {
         this.id = id;
     }
 
-    public PromocionesCombos getPromocionesCombospromoid() {
+    public Promociones getPromocionesCombospromoid() {
         return promocionesCombospromoid;
     }
 
-    public void setPromocionesCombospromoid(PromocionesCombos promocionesCombospromoid) {
+    public void setPromocionesCombospromoid(Promociones promocionesCombospromoid) {
         this.promocionesCombospromoid = promocionesCombospromoid;
     }
 
@@ -84,10 +85,10 @@ public class PromocionesCombosHasTblPlatoRestaurante implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PromocionesCombosHasTblPlatoRestaurante)) {
+        if (!(object instanceof PromocioneslPlatoRestaurante)) {
             return false;
         }
-        PromocionesCombosHasTblPlatoRestaurante other = (PromocionesCombosHasTblPlatoRestaurante) object;
+        PromocioneslPlatoRestaurante other = (PromocioneslPlatoRestaurante) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -96,7 +97,7 @@ public class PromocionesCombosHasTblPlatoRestaurante implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.PromocionesCombosHasTblPlatoRestaurante[ id=" + id + " ]";
+        return "Modelo.PromocioneslPlatoRestaurante[ id=" + id + " ]";
     }
     
 }

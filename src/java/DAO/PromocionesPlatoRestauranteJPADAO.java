@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.PromocionesCombosHasTblPlatoRestaurante;
+import Modelo.PromocioneslPlatoRestaurante;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,36 +27,36 @@ public class PromocionesPlatoRestauranteJPADAO implements PromocionesPlatoRestau
     }
     
     @Override
-    public List<PromocionesCombosHasTblPlatoRestaurante> ListarPromocionesCombosHasTblPlatoRestaurante() {
-        List<PromocionesCombosHasTblPlatoRestaurante> lst = null;
+    public List<PromocioneslPlatoRestaurante> ListarPromocionesCombosHasTblPlatoRestaurante() {
+        List<PromocioneslPlatoRestaurante> lst = null;
         Query q = em.createQuery("SELECT a FROM PromocionesCombosHasTblPlatoRestaurante a");
         lst = q.getResultList();
         return lst;
     }
 
     @Override
-    public void crearPromocionesCombosHasTblPlatoRestaurante(PromocionesCombosHasTblPlatoRestaurante promo) {
+    public void crearPromocionesCombosHasTblPlatoRestaurante(PromocioneslPlatoRestaurante promo) {
         em.getTransaction().begin();
         em.persist(promo);
         em.getTransaction().commit();
     }
 
     @Override
-    public PromocionesCombosHasTblPlatoRestaurante BuscarPromocionesCombosHasTblPlatoRestaurante(int id) {
-        PromocionesCombosHasTblPlatoRestaurante promo = null;
+    public PromocioneslPlatoRestaurante BuscarPromocionesCombosHasTblPlatoRestaurante(int id) {
+        PromocioneslPlatoRestaurante promo = null;
         promo = em.find(promo.getClass(), id);
         return promo;
     }
 
     @Override
-    public void ModificarPromocionesCombosHasTblPlatoRestaurante(PromocionesCombosHasTblPlatoRestaurante promo) {
+    public void ModificarPromocionesCombosHasTblPlatoRestaurante(PromocioneslPlatoRestaurante promo) {
         if (BuscarPromocionesCombosHasTblPlatoRestaurante(promo.getId()) != null)
             EliminarPromocionesCombosHasTblPlatoRestaurante(promo);
         crearPromocionesCombosHasTblPlatoRestaurante(promo);
     }
 
     @Override
-    public void EliminarPromocionesCombosHasTblPlatoRestaurante(PromocionesCombosHasTblPlatoRestaurante promo) {
+    public void EliminarPromocionesCombosHasTblPlatoRestaurante(PromocioneslPlatoRestaurante promo) {
         em.getTransaction().begin();
         em.remove(promo);
         em.getTransaction().commit();
